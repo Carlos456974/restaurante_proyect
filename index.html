@@ -38,6 +38,13 @@
       color: #fff;
       text-decoration: none;
       font-weight: bold;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: #e67e22;
     }
 
     main {
@@ -93,6 +100,7 @@
       padding: 0.5rem 1rem;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     .platillo button:hover {
@@ -108,6 +116,46 @@
       margin-bottom: 1rem;
     }
 
+    .item-carrito {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background-color: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1rem;
+    }
+
+    .item-carrito img {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .item-carrito .info {
+      flex-grow: 1;
+    }
+
+    .item-carrito .info p {
+      margin: 0;
+    }
+
+    .item-carrito button {
+      background-color: #e74c3c;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .item-carrito button:hover {
+      background-color: #c0392b;
+    }
+
     .carrito .total {
       font-size: 1.2rem;
       font-weight: bold;
@@ -121,6 +169,7 @@
       padding: 0.5rem 1rem;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     #pagar:hover {
@@ -157,6 +206,7 @@
       padding: 0.5rem 1rem;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     #formulario-pago button:hover {
@@ -198,7 +248,7 @@
             <label for="cantidad-arroz">Cantidad:</label>
             <input type="number" id="cantidad-arroz" value="1" min="1">
           </div>
-          <button class="agregar-carrito" data-platillo="Arroz Frito" data-precio="8.99">Agregar al Carrito</button>
+          <button class="agregar-carrito" data-platillo="Arroz Frito" data-precio="8.99" data-imagen="imagenes/arroz-frito.jpg">Agregar al Carrito</button>
         </div>
 
         <!-- Platillo 2: Ramen -->
@@ -211,7 +261,7 @@
             <label for="cantidad-ramen">Cantidad:</label>
             <input type="number" id="cantidad-ramen" value="1" min="1">
           </div>
-          <button class="agregar-carrito" data-platillo="Ramen" data-precio="10.99">Agregar al Carrito</button>
+          <button class="agregar-carrito" data-platillo="Ramen" data-precio="10.99" data-imagen="imagenes/ramen.jpg">Agregar al Carrito</button>
         </div>
 
         <!-- Platillo 3: Rollos Tempura -->
@@ -224,7 +274,7 @@
             <label for="cantidad-tempura">Cantidad:</label>
             <input type="number" id="cantidad-tempura" value="1" min="1">
           </div>
-          <button class="agregar-carrito" data-platillo="Rollos Tempura" data-precio="12.99">Agregar al Carrito</button>
+          <button class="agregar-carrito" data-platillo="Rollos Tempura" data-precio="12.99" data-imagen="imagenes/rollos-tempura.jpg">Agregar al Carrito</button>
         </div>
       </div>
     </section>
@@ -270,13 +320,14 @@
         const platillo = boton.getAttribute('data-platillo');
         const precio = parseFloat(boton.getAttribute('data-precio'));
         const cantidad = parseInt(boton.parentElement.querySelector('input').value);
+        const imagen = boton.getAttribute('data-imagen');
 
         // Verificar si el platillo ya está en el carrito
         const itemExistente = carrito.find((item) => item.platillo === platillo);
         if (itemExistente) {
           itemExistente.cantidad += cantidad;
         } else {
-          carrito.push({ platillo, precio, cantidad });
+          carrito.push({ platillo, precio, cantidad, imagen });
         }
 
         actualizarCarrito();
@@ -292,8 +343,11 @@
 
       carrito.forEach((item) => {
         const itemHTML = `
-          <div class="item">
-            <p>(${item.cantidad}) ${item.platillo} - $${(item.precio * item.cantidad).toFixed(2)}</p>
+          <div class="item-carrito">
+            <img src="${item.imagen}" alt="${item.platillo}">
+            <div class="info">
+              <p>(${item.cantidad}) ${item.platillo} - $${(item.precio * item.cantidad).toFixed(2)}</p>
+            </div>
             <button class="eliminar-item" data-platillo="${item.platillo}">Eliminar</button>
           </div>
         `;
