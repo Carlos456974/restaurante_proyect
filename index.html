@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurante Japonés</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header .logo img {
+      height: 50px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    /* Estilos del Catálogo */
+    .catalogo .platillos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .platillo {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      width: 300px;
+      text-align: center;
+    }
+
+    .platillo img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .platillo h3 {
+      margin: 1rem 0 0.5rem;
+    }
+
+    .platillo .precio {
+      font-size: 1.2rem;
+      color: #e67e22;
+      font-weight: bold;
+    }
+
+    .platillo .cantidad {
+      margin: 1rem 0;
+    }
+
+    .platillo button {
+      background-color: #e67e22;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .platillo button:hover {
+      background-color: #d35400;
+    }
+
+    /* Estilos del Carrito */
+    .carrito {
+      margin-top: 2rem;
+    }
+
+    .items-carrito {
+      margin-bottom: 1rem;
+    }
+
+    .carrito .total {
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    #pagar {
+      background-color: #27ae60;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #pagar:hover {
+      background-color: #219653;
+    }
+
+    /* Estilos del Pago */
+    .pago {
+      display: none;
+      margin-top: 2rem;
+    }
+
+    .pago .resumen {
+      background-color: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .pago .total-pago {
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    #formulario-pago {
+      margin-top: 1rem;
+    }
+
+    #formulario-pago button {
+      background-color: #27ae60;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #formulario-pago button:hover {
+      background-color: #219653;
+    }
+
+    .confirmacion {
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #27ae60;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="imagenes/logo.png" alt="Logo del Restaurante">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#catalogo">Menú</a></li>
+        <li><a href="#carrito">Carrito</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Sección del Catálogo -->
+    <section id="catalogo" class="catalogo">
+      <h2>Nuestro Menú</h2>
+      <div class="platillos">
+        <!-- Platillo 1: Arroz Frito -->
+        <div class="platillo">
+          <img src="imagenes/arroz-frito.jpg" alt="Arroz Frito">
+          <h3>Arroz Frito</h3>
+          <p>Delicioso arroz frito con vegetales y tu elección de proteína.</p>
+          <p class="precio">$8.99</p>
+          <div class="cantidad">
+            <label for="cantidad-arroz">Cantidad:</label>
+            <input type="number" id="cantidad-arroz" value="1" min="1">
+          </div>
+          <button class="agregar-carrito" data-platillo="Arroz Frito" data-precio="8.99">Agregar al Carrito</button>
+        </div>
+
+        <!-- Platillo 2: Ramen -->
+        <div class="platillo">
+          <img src="imagenes/ramen.jpg" alt="Ramen">
+          <h3>Ramen</h3>
+          <p>Ramen tradicional con caldo de miso, cerdo chashu y huevo.</p>
+          <p class="precio">$10.99</p>
+          <div class="cantidad">
+            <label for="cantidad-ramen">Cantidad:</label>
+            <input type="number" id="cantidad-ramen" value="1" min="1">
+          </div>
+          <button class="agregar-carrito" data-platillo="Ramen" data-precio="10.99">Agregar al Carrito</button>
+        </div>
+
+        <!-- Platillo 3: Rollos Tempura -->
+        <div class="platillo">
+          <img src="imagenes/rollos-tempura.jpg" alt="Rollos Tempura">
+          <h3>Rollos Tempura</h3>
+          <p>Rollos de sushi rellenos de tempura de camarón y aguacate.</p>
+          <p class="precio">$12.99</p>
+          <div class="cantidad">
+            <label for="cantidad-tempura">Cantidad:</label>
+            <input type="number" id="cantidad-tempura" value="1" min="1">
+          </div>
+          <button class="agregar-carrito" data-platillo="Rollos Tempura" data-precio="12.99">Agregar al Carrito</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección del Carrito -->
+    <section id="carrito" class="carrito">
+      <h2>Carrito de Compras</h2>
+      <div class="items-carrito">
+        <!-- Los items del carrito se agregarán dinámicamente aquí -->
+      </div>
+      <p class="total">Total: $<span id="total">0.00</span></p>
+      <button id="pagar">Proceder al Pago</button>
+    </section>
+
+    <!-- Sección de Pago -->
+    <section id="pago" class="pago">
+      <h2>Pago</h2>
+      <div class="resumen">
+        <h3>Resumen del Pedido</h3>
+        <div id="resumen-pedido"></div>
+        <p class="total-pago">Total a Pagar: $<span id="total-pago">0.00</span></p>
+      </div>
+      <form id="formulario-pago">
+        <label for="metodo-pago">Método de Pago:</label>
+        <select id="metodo-pago">
+          <option value="tarjeta">Tarjeta de Crédito</option>
+          <option value="paypal">PayPal</option>
+        </select>
+        <button type="submit">Confirmar Pago</button>
+      </form>
+      <p id="confirmacion-pago" class="confirmacion"></p>
+    </section>
+  </main>
+
+  <script>
+    // Variables globales
+    let carrito = [];
+    let total = 0;
+
+    // Función para agregar platillos al carrito
+    document.querySelectorAll('.agregar-carrito').forEach((boton) => {
+      boton.addEventListener('click', () => {
+        const platillo = boton.getAttribute('data-platillo');
+        const precio = parseFloat(boton.getAttribute('data-precio'));
+        const cantidad = parseInt(boton.parentElement.querySelector('input').value);
+
+        const item = {
+          platillo,
+          precio,
+          cantidad,
+        };
+
+        carrito.push(item);
+        actualizarCarrito();
+      });
+    });
+
+    // Función para actualizar el carrito
+    function actualizarCarrito() {
+      const itemsCarrito = document.querySelector('.items-carrito');
+      itemsCarrito.innerHTML = '';
+
+      total = 0;
+
+      carrito.forEach((item) => {
+        const itemHTML = `
+          <div class="item">
+            <p>${item.platillo} - $${item.precio.toFixed(2)} x ${item.cantidad}</p>
+            <button class="eliminar-item" data-platillo="${item.platillo}">Eliminar</button>
+          </div>
+        `;
+        itemsCarrito.innerHTML += itemHTML;
+
+        total += item.precio * item.cantidad;
+      });
+
+      document.getElementById('total').textContent = total.toFixed(2);
+    }
+
+    // Función para eliminar items del carrito
+    document.querySelector('.items-carrito').addEventListener('click', (e) => {
+      if (e.target.classList.contains('eliminar-item')) {
+        const platillo = e.target.getAttribute('data-platillo');
+        carrito = carrito.filter((item) => item.platillo !== platillo);
+        actualizarCarrito();
+      }
+    });
+
+    // Función para proceder al pago
+    document.getElementById('pagar').addEventListener('click', () => {
+      document.querySelector('.carrito').style.display = 'none';
+      document.querySelector('.pago').style.display = 'block';
+
+      const resumenPedido = document.getElementById('resumen-pedido');
+      resumenPedido.innerHTML = '';
+
+      carrito.forEach((item) => {
+        const itemHTML = `
+          <p>${item.platillo} - $${item.precio.toFixed(2)} x ${item.cantidad}</p>
+        `;
+        resumenPedido.innerHTML += itemHTML;
+      });
+
+      document.getElementById('total-pago').textContent = total.toFixed(2);
+    });
+
+    // Función para confirmar el pago
+    document.getElementById('formulario-pago').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('confirmacion-pago').textContent = '¡Pago confirmado! Gracias por su compra.';
+    });
+  </script>
+</body>
+</html>
