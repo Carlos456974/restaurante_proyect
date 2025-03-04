@@ -184,7 +184,7 @@
   </header>
 
   <main>
-    <!-- Sección del Catálogo -->
+    <!-- Página de Catálogo -->
     <section id="catalogo" class="catalogo">
       <h2>Nuestro Menú</h2>
       <div class="platillos">
@@ -229,8 +229,8 @@
       </div>
     </section>
 
-    <!-- Sección del Carrito -->
-    <section id="carrito" class="carrito">
+    <!-- Página del Carrito -->
+    <section id="carrito" class="carrito" style="display: none;">
       <h2>Carrito de Compras</h2>
       <div class="items-carrito">
         <!-- Los items del carrito se agregarán dinámicamente aquí -->
@@ -239,8 +239,8 @@
       <button id="pagar">Proceder al Pago</button>
     </section>
 
-    <!-- Sección de Pago -->
-    <section id="pago" class="pago">
+    <!-- Página de Pago -->
+    <section id="pago" class="pago" style="display: none;">
       <h2>Pago</h2>
       <div class="resumen">
         <h3>Resumen del Pedido</h3>
@@ -271,13 +271,14 @@
         const precio = parseFloat(boton.getAttribute('data-precio'));
         const cantidad = parseInt(boton.parentElement.querySelector('input').value);
 
-        const item = {
-          platillo,
-          precio,
-          cantidad,
-        };
+        // Verificar si el platillo ya está en el carrito
+        const itemExistente = carrito.find((item) => item.platillo === platillo);
+        if (itemExistente) {
+          itemExistente.cantidad += cantidad;
+        } else {
+          carrito.push({ platillo, precio, cantidad });
+        }
 
-        carrito.push(item);
         actualizarCarrito();
       });
     });
@@ -292,7 +293,7 @@
       carrito.forEach((item) => {
         const itemHTML = `
           <div class="item">
-            <p>${item.platillo} - $${item.precio.toFixed(2)} x ${item.cantidad}</p>
+            <p>(${item.cantidad}) ${item.platillo} - $${(item.precio * item.cantidad).toFixed(2)}</p>
             <button class="eliminar-item" data-platillo="${item.platillo}">Eliminar</button>
           </div>
         `;
@@ -313,6 +314,16 @@
       }
     });
 
+    // Navegación entre páginas
+    document.querySelectorAll('nav a').forEach((enlace) => {
+      enlace.addEventListener('click', (e) => {
+        e.preventDefault();
+        const seccion = enlace.getAttribute('href');
+        document.querySelectorAll('main > section').forEach((s) => (s.style.display = 'none'));
+        document.querySelector(seccion).style.display = 'block';
+      });
+    });
+
     // Función para proceder al pago
     document.getElementById('pagar').addEventListener('click', () => {
       document.querySelector('.carrito').style.display = 'none';
@@ -323,7 +334,7 @@
 
       carrito.forEach((item) => {
         const itemHTML = `
-          <p>${item.platillo} - $${item.precio.toFixed(2)} x ${item.cantidad}</p>
+          <p>(${item.cantidad}) ${item.platillo} - $${(item.precio * item.cantidad).toFixed(2)}</p>
         `;
         resumenPedido.innerHTML += itemHTML;
       });
